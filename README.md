@@ -147,7 +147,7 @@ fuse:install(Name, Opts).
 
 This sets up a *fuse* with a given Name and a given set of options. Options are given as a tuple with two values. The *strategy* of the fuse and the *refresh* of the fuse.
 
-* Strategy denotes what kind of fuse we have. The default is a `standard` fuse. Such a fuse will tolerate `MaxR` melting attempts in a time window of `MaxT`.
+* Strategy denotes what kind of fuse we have. The default is a `standard` fuse. Such a fuse will tolerate `MaxR` melting attempts in a time window of `MaxT` (milliseconds).
 * Refresh tells what to do with the fuse once it melts. Here we say that the fuse will reset after 60000ms.
 
 Fuses are name-created idempotently, so your application can recreate a fuse if it wants. Note however, that fuse recreation has two major rules:
@@ -206,7 +206,7 @@ this function will do the asking and melting itself based on the output of the u
 
 There are a couple of different fuse types in the system:
 
-* Standard fuses, `{standard, MaxR, MaxT}`. These are fuses which tolerate `MaxR` melt attempts in a `MaxT` window, before they break down.
+* Standard fuses, `{standard, MaxR, MaxT}`. These are fuses which tolerate `MaxR` melt attempts in a `MaxT` (milliseconds) window, before they break down.
 * Fault injection fuses, `{fault_injection, Rate, MaxR, MaxT}`. This fuse type sets up a fault injection scheme where the fuse fails at rate `Rate`, an floating point value between `0.0`–`1.0`. If you enter, say `1 / 500` then roughly every 500th request will se a `blown` fuse, even if the fuse is okay. This can be used to add noise to the system and verify that calling systems support the failure modes appropriately. The values `MaxR` and `MaxT` works as in a standard fuse.
 
 ## Administrative commands
